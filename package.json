@@ -1,0 +1,21 @@
+{
+  "name": "rensyuu-front",
+  "version": "1.0.0",
+  "description": "フロントエンド練習用のレポジトリです",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "eslint": "^8.11.0",
+    "express": "^4.17.3",
+    "helmet": "^5.1.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.0"
+  }
+}
