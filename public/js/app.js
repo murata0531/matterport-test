@@ -5,6 +5,7 @@ let iframe = document.getElementById('showcase');
 
 let map = document.getElementById('map');
 let minX, minY, maxX, maxY;
+let currentSweep;
 
 let modes = document.querySelectorAll('.mode-control');
 let moves = document.querySelectorAll('.move-control');
@@ -12,7 +13,7 @@ let transitions = document.querySelectorAll('.transition-control');
 
 // ** Replace demo applicationKey with your application key **
 const JS_FIDDLE_KEY = "paste your key";
-const MODEL_SID = "JGPnGQ6hosj";
+const MODEL_SID = "cKHMpazixm2";
 
 // sdk embed
 const params = `m=${MODEL_SID}&hhl=0&play=1&tiles=1&hl=0&qs=1&applicationKey=${JS_FIDDLE_KEY}`;
@@ -78,13 +79,10 @@ function loadedSpaceHandler(metadata) {
     // Initialize min and max values
     minX = maxX = minY = maxY = 0;
 
-    console.log(metadata.sweeps);
-    console.log(showcase);
-
     let sweeps = metadata.sweeps.map(function (sweep) {
+        console.log(sweep);
 
         if (sweep.position && sweep.placementType === "auto") {
-            console.log(sweep);
             // Format data
             let p = {
                 pid: sweep.uuid,
@@ -152,11 +150,12 @@ function loadedSpaceHandler(metadata) {
 
 }
 
-// 場所を移動するたびに発火するイベント
+// sweepするたびに発火するイベント
 // sweepするたびにマップ上の現在地をmatterport上の現在地に合わせる
 function changedSweepHandler(oldP, newP) {
     // Update map markers
-    let curr = document.getElementById('p' + newP);
+    currentSweep = 'p' + newP;
+    let curr = document.getElementById(currentSweep);
     let prev = document.getElementById('p' + oldP) || curr;
 
     settings.sweep = (curr && curr.value) || '';
@@ -242,7 +241,6 @@ function sweepMove(event) {
     }).then(handleMessage).catch(handleError);
 }
 
-// モデルごとに計算方法が違う?
 function scaleToContainer(num, min, max, scale, offset) {
     // calculate position as percentage with left and top offset
     // return ( ((num - min) / (max - min)) * 78 ) + 6;
@@ -256,10 +254,9 @@ function sweepToMap(p) {
         let btn = document.createElement('BUTTON');
         let cList = 'sweep z-depth-3';
 
-        // let x = scaleToContainer(p.x, minX, maxX, 71, 13);
-        // let y = scaleToContainer(p.y, minY, maxY, 74, 15) - 10;
-        let x = scaleToContainer(p.x, minX, maxX, ((maxX - minX) * 4 - 5), 41.2);
-        let y = scaleToContainer(p.y, minY, maxY, 75, 19.6);
+        let x = scaleToContainer(p.x, minX, maxX, 70, 15);
+        let y = scaleToContainer(p.y, minY, maxY, 60, 20);
+
 
         btn.setAttribute('id', 'p' + p.pid);
         btn.setAttribute('value', p.pid);
@@ -269,8 +266,6 @@ function sweepToMap(p) {
 
         btn.addEventListener('click', sweepMove);
         map.appendChild(btn);
-
-        // console.log(p.x);
     }
 }
 
@@ -300,77 +295,11 @@ function handleError(err) {
     console.error(err);
 }
 
-// canvasデータ保存用のメソッド
-document.getElementById("save-image").addEventListener('click', function () {
-
-
-    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    let webgl_canvas = iframeDocument.getElementsByClassName("webgl-canvas");
-    webgl_canvas[0].setAttribute('id', 'webgl-canvas');
-
-    const canvas_container = iframeDocument.getElementById("canvas-container");
-    const show = iframeDocument.getElementsByClassName("showcase");
-
-
-    let style = window.getComputedStyle(canvas_container);
-    let value = style.getPropertyValue('background');
-
-    // map_area.insertBefore(circle, map_group);
-
-    show[0].appendChild(circle);
-
-    let webgl_canvas3 = iframeDocument.getElementById("webgl-canvas");
-    console.log(webgl_canvas3);
-
-    // canvasをダウンロード
-    // canvasDownload("webgl-canvas");
-
-});
-
-/**
- * Canvasを画像としてダウンロード
- *
- * @param {string} id          対象とするcanvasのid
- * @param {string} [type]      画像フォーマット
- * @param {string} [filename]  DL時のデフォルトファイル名
- * @return {void}
- */
-function canvasDownload(id, type = "image/png", filename = "canvas") {
-    const blob = getBlobFromCanvas(id, type);       // canvasをBlobデータとして取得
-    const dataURI = window.URL.createObjectURL(blob);  // Blobデータを「URI」に変換
-
-    // JS内部でクリックイベントを発動→ダウンロード
-    const event = document.createEvent("MouseEvents");
-    event.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-    const a = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
-    a.href = dataURI;         // URI化した画像
-    a.download = filename;    // デフォルトのファイル名
-    a.dispatchEvent(event);   // イベント発動
-}
-
-/**
-  * 現状のCanvasを画像データとして返却
-  *
-  * @param {string}  id     対象とするcanvasのid
-  * @param {string}  [type] MimeType
-  * @return {blob}
-  */
-function getBlobFromCanvas(id, type = "image/png") {
-    const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-    const canvas = iframeDocument.getElementById("webgl-canvas");
-    // const canvas = document.querySelector(id);
-    const base64 = canvas.toDataURL(type);              // "data:image/png;base64,iVBORw0k～"
-    const tmp = base64.split(",");                     // ["data:image/png;base64,", "iVBORw0k～"]
-    const data = atob(tmp[1]);                          // 右側のデータ部分(iVBORw0k～)をデコード
-    const mime = tmp[0].split(":")[1].split(";")[0];    // 画像形式(image/png)を取り出す
-
-    // Blobのコンストラクタに食わせる値を作成
-    let buff = new Uint8Array(data.length);
-    for (let i = 0; i < data.length; i++) {
-        buff[i] = data.charCodeAt(i);
-    }
-
-    return (
-        new Blob([buff], { type: mime })
-    );
-}
+// リサイズしてもマップの現在地がずれないようにする
+window.addEventListener( 'resize', function() {
+    let curr = document.getElementById(currentSweep);
+    curr.scrollIntoView({
+        block: "center",
+        inline: "center"
+    });
+}, false );
