@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>Matterport SDK</title>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" media="screen,projection">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,700&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js" class='build keep'></script>
+    <script src="https://static.matterport.com/showcase-sdk/2.0.1-0-g64e7e88/sdk.js" class='build keep'></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+    <style>
+        #sector_q_canvas {
+            width: 150px;
+            height: 150px;
+            margin: 15px 5px;
+            transform:rotate(-55deg);
+        }
+       
+    </style>
+</head>
+
+<body class="gray">
+
+  <!-- Canvas 半径 r 中心角 O の扇形 -->
+    <section class="sans20">
+        <canvas id="sector_q_canvas" width="400" height="400"></canvas>
+    </section>
+
+    <script>
+
+        drawSectorCanvas(1, 105, true);
+
+        // 中心角と象限を指定して扇形を作図する
+        function drawSectorCanvas(quadrant, rad, mode) {
+            var cvs = document.getElementById('sector_q_canvas');
+            var pen = cvs.getContext('2d');
+            var w = cvs.width;
+            var h = cvs.height;
+            var x = w/2;
+            var y = h/2;
+            var r = 170;
+	        rad *= Math.PI/180;
+            // Canvas 全体をクリアする
+            pen.clearRect(0, 0, w, h);
+
+            // ペン軸の座標基準点を移動させる
+            pen.translate(x, y);
+
+            // 扇形を象限 (quadrant) ごとに描く
+            pen.fillStyle = 'lightskyblue';
+            pen.strokeStyle = 'lavender';
+            pen.lineWidth = 2;
+            pen.beginPath();
+		    pen.moveTo(0, 0);
+            switch (quadrant) {
+            case 4:
+                pen.arc(0, 0, r, 0, rad);
+                break;
+            case 3:
+                pen.arc(0, 0, r, Math.PI/2, Math.PI/2+rad);
+                break;
+            case 2:
+                pen.arc(0, 0, r, -Math.PI, -Math.PI+rad);
+                break;
+            case 1:
+            default:
+                pen.arc(0, 0, r, -Math.PI/2, -Math.PI/2+rad);
+                break;
+            }
+            pen.closePath();
+            if(mode) { pen.fill(); }
+            pen.stroke();
+
+        }
+    </script>
+</body>
+
+</html>
