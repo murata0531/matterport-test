@@ -1,0 +1,254 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+h3,
+h5,
+h6,
+a {
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #000000;
+}
+
+button {
+    font-size: 18px;
+}
+
+.mp-content.container {
+    height: auto;
+    max-width: none;
+}
+
+.control.btn {
+    padding: 5px auto;
+    background-color: #222222;
+    font-family: 'Roboto', sans-serif;
+}
+
+.control.btn:hover {
+    background-color: #ff3158;
+}
+
+.control.btn:focus {
+    background-color: #39c2b4;
+}
+
+.control.btn.active {
+    background-color: #444444;
+}
+
+.control-group .btn-group {
+    display: inline-block;
+    padding: 5px;
+}
+
+.transition-control,
+.mode-control {
+    font-size: 12px;
+    padding: 0 10px;
+    min-width: 60px;
+}
+
+.rotation-control {
+    display: flex;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    color: white;
+    text-align: center;
+}
+
+.map-content {
+    position: absolute;
+}
+
+.map-area {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    top: 0;
+    left:0%;
+    display: inline-block;
+    z-index: 10;
+}
+
+.map-group {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.map-container {
+    display: inline-block;
+    position: absolute;
+    box-sizing: border-box;
+    padding: 5px 5px 0px 5px;
+    /* width: 382px; */
+    /* height: 533px; */
+    height: 600px;
+}
+
+.map:after {
+    padding-top: 5%;
+    /* 16:9 ratio */
+    display: block;
+    content: '';
+}
+
+.map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    font-size: 10px;
+}
+
+#model-img {
+    position: absolute;
+    width: auto;
+    height: 600px;
+}
+
+.map .sweep,
+.map .sweep:visited {
+    color: transparent;
+    display: inline-block;
+    position: absolute;
+    padding: 0 0;
+    margin: 0;
+    height: 0.8rem;
+    width: 0.8rem;
+    border: 0.25rem solid rgba(255, 255, 0, 0.79);
+    border-radius: 50%;
+    box-sizing: content-box;
+    background-color: transparent;
+    font-size: 10px;
+    z-index: 100;
+}
+
+.circle {
+    position: absolute;
+    border-top: solid 30px #FF9933;
+    border-left: solid 30px transparent;
+    border-right: solid 30px transparent;
+    border-bottom: solid 30px transparent;
+    height: 30px;
+    width: 30px;
+    z-index: 30;
+    top: 35%;
+    left: 35%;
+    opacity: 0.9;
+}
+
+.sweep {
+    /* visibility: hidden; */
+}
+
+.sweep.active {
+    background-color: orangered;
+    border: 0.25rem solid rgba(255, 255, 0, 0.79);
+}
+
+.sweep:hover {
+    background-color: rgba(255, 255, 0, 0.79);
+}
+
+.control.left,
+.control.right {
+    width: 45%;
+    border-radius: 0;
+}
+
+.control.right {
+    text-align: right;
+}
+
+.control.left {
+    text-align: left;
+}
+
+.connect-control {
+    min-height: 50px;
+}
+
+@media only screen and (min-width: 601px) {
+    .row .col.m8 {
+        width: 100%;
+        margin: 10px;
+    }
+
+    .row .col.m4 {
+        width: 100%;
+    }
+
+    .container {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    .container {
+        width: 85%;
+    }
+}
+
+.player {
+    padding: 5px 5px 0px 5px;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+}
+
+.mode-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.row .col.s3 {
+    margin-left: 0px;
+}
+
+#navigation-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.dpad-controls {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.left-right {
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+.btn-flat .material-icons {
+    font-size: 3rem;
+}
+
+.btn-flat .material-icons:hover {
+    color: #ff3158;
+}
+
+.move-control:focus {
+    background-color: white;
+}
