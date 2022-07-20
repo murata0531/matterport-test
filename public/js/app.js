@@ -13,7 +13,7 @@ let transitions = document.querySelectorAll('.transition-control');
 
 // ** Replace demo applicationKey with your application key **
 const JS_FIDDLE_KEY = "paste your key";
-const MODEL_SID = "cKHMpazixm2";
+const MODEL_SID = "paste your model";
 
 // sdk embed
 const params = `m=${MODEL_SID}&hhl=0&play=1&tiles=1&hl=0&qs=1&applicationKey=${JS_FIDDLE_KEY}`;
@@ -39,8 +39,10 @@ function showcaseLoader() {
 
             let img = document.getElementById("model-img");
             let map_container = document.getElementById("map-container");
+            // img.style.transform = "rotate(180deg)";
             map_container.style.width = img.width + "px";
 
+            alert(map_container.style.height);
             resolve('成功しました');
         }).then((result) => {
             window.MP_SDK.connect(iframe, JS_FIDDLE_KEY, '3.10').then(loadedShowcaseHandler).catch(handleError);
@@ -161,13 +163,15 @@ function changedSweepHandler(oldP, newP) {
     settings.sweep = (curr && curr.value) || '';
     toggleActive(curr, prev);
 
-    prev.style.visibility = "hidden";
+    
+    curr.style.visibility = "visible";
 
     curr.scrollIntoView({
         block: "center",
         inline: "center"
     });
-    curr.style.visibility = "visible";
+    
+    prev.style.visibility = "hidden";
 
 }
 
@@ -254,8 +258,8 @@ function sweepToMap(p) {
         let btn = document.createElement('BUTTON');
         let cList = 'sweep z-depth-3';
 
-        let x = scaleToContainer(p.x, minX, maxX, 70, 15);
-        let y = scaleToContainer(p.y, minY, maxY, 60, 20);
+        let x = scaleToContainer(p.x, minX, maxX, 55, 22.8);
+        let y = scaleToContainer(p.y, minY, maxY, 52, 30.6);
 
 
         btn.setAttribute('id', 'p' + p.pid);
