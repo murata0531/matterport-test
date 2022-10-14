@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>test</title>
+</head>
+
+<body class="gray">
+
+   <div id="area1" style="height:20vw;width:20vw;background-color:red;position:fixed;">
+        <div style="position:relative;height:100%;width: 100%;background-color: blue;"></div>
+   </div>
+   <button id="btn" style="position: relative; top:70vh;">送信</button>
+    <script>
+        window.onload = function(){
+        // ページ読み込み時に実行したい処理
+            let origin = document.getElementById('area1');
+            let originHeight = originstyle.height;
+            let originWidth = origin.style.width;
+
+            document.getElementById("btn").addEventListener ( "click", function() {
+                origin.style.height = Number(originHeight) * 2;
+                origin.style.width = Number(originWidth) * 2;
+                alert(originHeight + " : " + originWidth);
+            });
+        }
+    </script>
+</body>
+
+</html>

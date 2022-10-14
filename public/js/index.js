@@ -1,7 +1,7 @@
 "use strict";
 
-const JS_FIDDLE_KEY = "paste your key";
-const MODEL_SID = "paste your model";
+const JS_FIDDLE_KEY = "81pfymcqcbd6m1xqzgdu3skpb";
+const MODEL_SID = "Sb1iuWnr2VB";
 
 const resolution = {
   width: 600,

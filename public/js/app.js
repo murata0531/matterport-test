@@ -12,8 +12,8 @@ let moves = document.querySelectorAll('.move-control');
 let transitions = document.querySelectorAll('.transition-control');
 
 // ** Replace demo applicationKey with your application key **
-const JS_FIDDLE_KEY = "paste your key";
-const MODEL_SID = "paste your model";
+const JS_FIDDLE_KEY = "81pfymcqcbd6m1xqzgdu3skpb";
+const MODEL_SID = "KY8YjrjZf5J";
 
 // sdk embed
 const params = `m=${MODEL_SID}&hhl=0&play=1&tiles=1&hl=0&qs=1&applicationKey=${JS_FIDDLE_KEY}`;
@@ -42,7 +42,6 @@ function showcaseLoader() {
             // img.style.transform = "rotate(180deg)";
             map_container.style.width = img.width + "px";
 
-            alert(map_container.style.height);
             resolve('成功しました');
         }).then((result) => {
             window.MP_SDK.connect(iframe, JS_FIDDLE_KEY, '3.10').then(loadedShowcaseHandler).catch(handleError);
@@ -258,8 +257,8 @@ function sweepToMap(p) {
         let btn = document.createElement('BUTTON');
         let cList = 'sweep z-depth-3';
 
-        let x = scaleToContainer(p.x, minX, maxX, 55, 22.8);
-        let y = scaleToContainer(p.y, minY, maxY, 52, 30.6);
+        let x = scaleToContainer(p.x, minX, maxX, 78, 13.7);
+let y = scaleToContainer(p.y, minY, maxY, 78, 20);
 
 
         btn.setAttribute('id', 'p' + p.pid);
